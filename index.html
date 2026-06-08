@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AImate 產品需求與痛點驗證問卷</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="theme-landing">
+    <!-- 背景裝飾光暈 -->
+    <div class="glow-bg">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <main class="app-wrapper">
+        <!-- 頂部 Logo / 標題 -->
+        <header class="app-header">
+            <div class="logo">AImate<span>.ai</span></div>
+            <button id="admin-trigger" class="btn-icon-only" title="管理後台">📊</button>
+        </header>
+
+        <!-- 區段 1：角色選擇頁面 -->
+        <section id="role-selection" class="screen-view active">
+            <div class="welcome-card glass-card">
+                <div class="badge">需求驗證</div>
+                <h1>幫助我們打造最懂學生的<br><span class="highlight">AI 數學學習工具</span></h1>
+                <p class="subtitle">這是一份關於國中數學學習與考卷訂正的調查。請選擇您的身份開始填寫（約需 3 分鐘）：</p>
+                
+                <div class="role-grid">
+                    <button class="role-btn btn-parent" onclick="selectRole('parent')">
+                        <span class="role-icon">👨‍👩‍👧</span>
+                        <span class="role-title">我是國中生家長</span>
+                        <span class="role-desc">關心孩子學習與考卷訂正現況</span>
+                    </button>
+                    
+                    <button class="role-btn btn-student" onclick="selectRole('student')">
+                        <span class="role-icon">🎒</span>
+                        <span class="role-title">我是國中同學</span>
+                        <span class="role-desc">分享你平常寫考卷與訂正的想法</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區段 2：問卷卡片容器 -->
+        <section id="survey-section" class="screen-view">
+            <!-- 進度條 -->
+            <div class="progress-container">
+                <div class="progress-bar-wrapper">
+                    <div id="survey-progress" class="progress-bar" style="width: 0%;"></div>
+                </div>
+                <div class="progress-text">問題 <span id="current-question-num">1</span> / <span id="total-questions-num">8</span></div>
+            </div>
+
+            <!-- 卡片容器 -->
+            <div id="cards-viewport" class="cards-viewport">
+                <!-- 卡片會由 JS 動態生成與切換 -->
+            </div>
+            
+            <!-- 卡片控制按鈕 -->
+            <div class="survey-navigation">
+                <button id="btn-prev" class="btn btn-secondary" onclick="prevQuestion()" disabled>上一題</button>
+                <button id="btn-next" class="btn btn-primary" onclick="nextQuestion()">下一題</button>
+            </div>
+        </section>
+
+        <!-- 區段 3：統計 Dashboard 後台 -->
+        <section id="dashboard-section" class="screen-view">
+            <div class="dashboard-header glass-card">
+                <div class="flex-row justify-between align-center">
+                    <div>
+                        <h2>📊 AImate 問卷結果實時分析</h2>
+                        <p class="subtitle">根據 LocalStorage 收集到的問卷結果（可用於專案憑據）</p>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="exportData('json')">匯出 JSON</button>
+                        <button class="btn btn-secondary" onclick="exportData('csv')">匯出 CSV</button>
+                        <button class="btn btn-danger" onclick="clearAllData()">清空數據</button>
+                        <button class="btn btn-primary" onclick="exitDashboard()">返回問卷</button>
+                    </div>
+                </div>
+                <div class="stats-overview-grid mt-4">
+                    <div class="stat-box">
+                        <span class="stat-val" id="stat-total">0</span>
+                        <span class="stat-lbl">總填答人數</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val" id="stat-parents">0</span>
+                        <span class="stat-lbl">家長比例</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val" id="stat-students">0</span>
+                        <span class="stat-lbl">學生比例</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-val" id="stat-emails">0</span>
+                        <span class="stat-lbl">留下 Email 願意試用</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 數據分析卡片群 -->
+            <div class="dashboard-grid mt-4">
+                <!-- 痛點分析 -->
+                <div class="chart-card glass-card">
+                    <h3>🔍 痛點是否真實？</h3>
+                    <p class="chart-desc">家長與學生在「訂正錯題」上最常遇到的狀況（複選統計）</p>
+                    <div id="chart-pain" class="chart-container-bars">
+                        <!-- 動態渲染條形圖 -->
+                    </div>
+                </div>
+
+                <!-- 付費意願 -->
+                <div class="chart-card glass-card">
+                    <h3>💰 家長付費意願分佈</h3>
+                    <p class="chart-desc">每月最多願意付多少訂閱費？（定價參考憑據）</p>
+                    <div id="chart-payment" class="chart-container-pie">
+                        <!-- 動態渲染圓餅圖/環形圖 -->
+                    </div>
+                </div>
+
+                <!-- 課業花費 -->
+                <div class="chart-card glass-card">
+                    <h3>📈 現有學習月花費（價格錨點）</h3>
+                    <p class="chart-desc">家長每月在孩子課業學習上的花費分佈</p>
+                    <div id="chart-expenses" class="chart-container-bars">
+                        <!-- 動態渲染條形圖 -->
+                    </div>
+                </div>
+
+                <!-- 產品意願與留信 -->
+                <div class="chart-card glass-card">
+                    <h3>✉️ 潛在用戶試用名單</h3>
+                    <p class="chart-desc">願意留下 Email 搶先試用的家長名單</p>
+                    <div class="email-list-wrapper">
+                        <table class="email-table">
+                            <thead>
+                                <tr>
+                                    <th>身份</th>
+                                    <th>Email</th>
+                                    <th>最想解決的事</th>
+                                </tr>
+                            </thead>
+                            <tbody id="email-table-body">
+                                <!-- 動態填入 Email 名單 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 粒子特效容器（學生版專用） -->
+    <div id="stars-container" class="stars-overlay"></div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/db.js"></script>
+    <script src="js/survey-data.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

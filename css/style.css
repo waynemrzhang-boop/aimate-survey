@@ -1,0 +1,813 @@
+/* 
+   AImate Survey Style Sheet
+   設計核心：Glassmorphism, 雙色主題, 流暢卡片切換, 響應式佈局
+*/
+
+/* 基礎變數與 Landing Page 主題 */
+:root {
+    --font-primary: 'Inter', 'Noto Sans TC', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    
+    /* 共用顏色 */
+    --color-white: #ffffff;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-700: #374151;
+    --color-gray-900: #111827;
+    
+    /* 預設 Landing Page / 通用配色 */
+    --primary: #4f46e5;
+    --primary-glow: rgba(79, 70, 229, 0.15);
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(255, 255, 255, 0.6);
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --orb-1-color: rgba(99, 102, 241, 0.4);
+    --orb-2-color: rgba(168, 85, 247, 0.3);
+    
+    /* 圓角與陰影 */
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+    --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 家長版主題 (明亮科技藍) */
+body.theme-parent {
+    --primary: #0284c7;
+    --primary-glow: rgba(2, 132, 199, 0.15);
+    --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    --card-bg: rgba(255, 255, 255, 0.75);
+    --card-border: rgba(255, 255, 255, 0.8);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --orb-1-color: rgba(14, 165, 233, 0.3);
+    --orb-2-color: rgba(56, 189, 248, 0.2);
+}
+
+/* 學生版主題 (酷炫霓虹暗黑) */
+body.theme-student {
+    --primary: #a855f7;
+    --primary-glow: rgba(168, 85, 247, 0.3);
+    --bg-gradient: linear-gradient(135deg, #090514 0%, #120a2a 100%);
+    --card-bg: rgba(20, 12, 40, 0.6);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f3e8ff;
+    --text-secondary: #c084fc;
+    --orb-1-color: rgba(139, 92, 246, 0.25);
+    --orb-2-color: rgba(236, 72, 153, 0.15);
+    --color-gray-100: rgba(255, 255, 255, 0.05);
+    --color-gray-200: rgba(255, 255, 255, 0.1);
+    --color-gray-900: #faf5ff;
+}
+
+/* 基礎重設與排版 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+/* 背景光暈效果 */
+.glow-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    mix-blend-mode: multiply;
+    transition: var(--transition-smooth);
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    top: -100px;
+    left: -100px;
+    background: var(--orb-1-color);
+}
+
+.orb-2 {
+    width: 600px;
+    height: 600px;
+    bottom: -150px;
+    right: -100px;
+    background: var(--orb-2-color);
+}
+
+/* 主容器 */
+.app-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 680px;
+    padding: 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 頁首 */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.logo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+/* 玻璃卡片基底 */
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-premium);
+    padding: 40px;
+    transition: var(--transition-smooth);
+}
+
+/* 區段視圖控制 */
+.screen-view {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.screen-view.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 角色選擇樣式 */
+.welcome-card h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 2.25rem;
+    line-height: 1.25;
+    margin: 16px 0;
+    letter-spacing: -0.5px;
+}
+
+.highlight {
+    color: var(--primary);
+    background: var(--primary-glow);
+    padding: 0 8px;
+    border-radius: 8px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--primary-glow);
+    color: var(--primary);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.role-btn {
+    background: var(--color-white);
+    border: 1.5px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: 30px 20px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-smooth);
+}
+
+body.theme-student .role-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.role-icon {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+}
+
+.role-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.role-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.role-btn:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 12px 24px -10px var(--primary-glow);
+}
+
+/* 進度條樣式 */
+.progress-container {
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.progress-bar-wrapper {
+    flex: 1;
+    height: 8px;
+    background: var(--color-gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body.theme-student .progress-bar-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 10px;
+    transition: width 0.30s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progress-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* 卡片切換視窗與動畫 */
+.cards-viewport {
+    position: relative;
+    min-height: 400px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.survey-card {
+    width: 100%;
+    display: none;
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+}
+
+.survey-card.active {
+    display: block;
+}
+
+/* 卡片切換動畫 */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+}
+
+.slide-in-right { animation-name: slideInRight; }
+.slide-out-left { animation-name: slideOutLeft; }
+.slide-in-left { animation-name: slideInLeft; }
+.slide-out-right { animation-name: slideOutRight; }
+
+/* 問卷卡片內容 */
+.card-intro-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    background: var(--color-gray-100);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 24px;
+    border-left: 4px solid var(--primary);
+}
+
+.question-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 24px;
+}
+
+.question-type-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--primary);
+    background: var(--primary-glow);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* 選項按鈕樣式 */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    user-select: none;
+    position: relative;
+}
+
+body.theme-student .option-item {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.option-item input {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.option-text {
+    font-size: 1rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+.option-item:hover {
+    border-color: var(--primary);
+    background: var(--primary-glow);
+    transform: translateX(4px);
+}
+
+.option-item.selected {
+    border-color: var(--primary);
+    background: var(--primary-glow);
+    box-shadow: 0 4px 12px -5px var(--primary-glow);
+}
+
+/* 輸入框樣式 */
+.input-text-wrapper {
+    margin-top: 16px;
+}
+
+.input-text {
+    width: 100%;
+    padding: 16px;
+    border: 1.5px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    background: var(--color-white);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    transition: var(--transition-smooth);
+}
+
+body.theme-student .input-text {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.input-text:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.textarea-text {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* 按鈕樣式 */
+.btn {
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: var(--color-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px var(--primary);
+}
+
+.btn-secondary {
+    background: var(--color-gray-100);
+    color: var(--text-primary);
+    border: 1px solid var(--color-gray-200);
+}
+
+body.theme-student .btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--color-gray-200);
+}
+
+body.theme-student .btn-secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.survey-navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* 結束畫面與集星特效 */
+.completion-card {
+    text-align: center;
+}
+
+.completion-icon {
+    font-size: 4rem;
+    margin-bottom: 24px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* 學生版星星雨 */
+.stars-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.falling-star {
+    position: absolute;
+    color: #f59e0b;
+    font-size: 1.5rem;
+    filter: drop-shadow(0 0 5px #fbbf24);
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-50px) rotate(0deg) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0px) rotate(36deg) scale(1);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Dashboard 後台樣式 */
+#dashboard-section {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.dashboard-header {
+    margin-bottom: 24px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.justify-between { justify-content: space-between; }
+.align-center { align-items: center; }
+
+.btn-group {
+    display: flex;
+    gap: 12px;
+}
+
+.stats-overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.stat-box {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-student .stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.stat-val {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+    font-family: var(--font-display);
+    margin-bottom: 4px;
+}
+
+.stat-lbl {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.chart-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.chart-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* 長條圖 (純 CSS) */
+.chart-container-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.bar-label-group {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.bar-wrapper {
+    height: 20px;
+    background: var(--color-gray-200);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+body.theme-student .bar-wrapper {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 10px;
+    width: 0;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 圓餅圖/環形圖 (SVG 實現) */
+.chart-container-pie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    position: relative;
+}
+
+/* Email 列表表格 */
+.email-list-wrapper {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-sm);
+}
+
+body.theme-student .email-list-wrapper {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.email-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+.email-table th, .email-table td {
+    padding: 12px 16px;
+}
+
+.email-table th {
+    background: var(--color-gray-100);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+body.theme-student .email-table th {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.email-table tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+body.theme-student .email-table tr:not(:last-child) {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 工具類 */
+.mt-4 { margin-top: 16px; }
+.mr-2 { margin-right: 8px; }
+.btn-icon-only {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: var(--transition-smooth);
+}
+
+.btn-icon-only:hover {
+    background: var(--primary-glow);
+}
+
+/* 響應式斷點 */
+@media (max-width: 768px) {
+    .role-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-overview-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .glass-card {
+        padding: 24px;
+    }
+    
+    body {
+        align-items: flex-start;
+    }
+}
