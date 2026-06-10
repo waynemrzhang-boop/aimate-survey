@@ -10,59 +10,79 @@
     
     /* 共用顏色 */
     --color-white: #ffffff;
-    --color-gray-50: #f9fafb;
-    --color-gray-100: #f3f4f6;
-    --color-gray-200: #e5e7eb;
-    --color-gray-300: #d1d5db;
-    --color-gray-700: #374151;
-    --color-gray-900: #111827;
+    --color-gray-50: #0e2138;
+    --color-gray-100: rgba(255, 255, 255, 0.05);
+    --color-gray-200: rgba(96, 170, 255, 0.28);
+    --color-gray-300: rgba(96, 170, 255, 0.45);
+    --color-gray-700: #9db8d6;
+    --color-gray-900: #e6f1fb;
     
-    /* 預設 Landing Page / 通用配色 */
-    --primary: #4f46e5;
-    --primary-glow: rgba(79, 70, 229, 0.15);
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --card-border: rgba(255, 255, 255, 0.6);
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --orb-1-color: rgba(99, 102, 241, 0.4);
-    --orb-2-color: rgba(168, 85, 247, 0.3);
+    /* 預設 Landing Page / 通用配色（深藍夜空＋青藍發光） */
+    --primary: #34c8e0;
+    --primary-text: #04222b;
+    --primary-glow: rgba(52, 200, 224, 0.18);
+    --primary-shadow: 0 0 18px rgba(52, 200, 224, 0.45);
+    --bg-gradient: radial-gradient(ellipse at 50% 0%, #0e2138 0%, #07101f 55%, #04070f 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(96, 170, 255, 0.28);
+    --card-border-hover: rgba(120, 195, 255, 0.6);
+    --text-primary: #e6f1fb;
+    --text-secondary: #9db8d6;
+    --text-muted: #6f8bab;
+    --orb-1-color: rgba(52, 200, 224, 0.15);
+    --orb-2-color: rgba(14, 80, 160, 0.2);
+    
+    /* 狀態色 */
+    --color-red: #fca5a5;
+    --color-green: #6ee7b7;
+    --color-star: #FFC400;
     
     /* 圓角與陰影 */
     --radius-lg: 24px;
     --radius-md: 16px;
     --radius-sm: 12px;
-    --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    --shadow-premium: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
     --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 家長版主題 (明亮科技藍) */
+/* 家長版主題 (深藍夜空＋青藍發光) */
 body.theme-parent {
-    --primary: #0284c7;
-    --primary-glow: rgba(2, 132, 199, 0.15);
-    --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    --card-bg: rgba(255, 255, 255, 0.75);
-    --card-border: rgba(255, 255, 255, 0.8);
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --orb-1-color: rgba(14, 165, 233, 0.3);
-    --orb-2-color: rgba(56, 189, 248, 0.2);
+    --primary: #34c8e0;
+    --primary-text: #04222b;
+    --primary-glow: rgba(52, 200, 224, 0.18);
+    --primary-shadow: 0 0 18px rgba(52, 200, 224, 0.45);
+    --bg-gradient: radial-gradient(ellipse at 50% 0%, #0e2138 0%, #07101f 55%, #04070f 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(96, 170, 255, 0.28);
+    --card-border-hover: rgba(120, 195, 255, 0.6);
+    --text-primary: #e6f1fb;
+    --text-secondary: #9db8d6;
+    --text-muted: #6f8bab;
+    --orb-1-color: rgba(52, 200, 224, 0.15);
+    --orb-2-color: rgba(14, 80, 160, 0.2);
+    --color-gray-100: rgba(255, 255, 255, 0.05);
+    --color-gray-200: rgba(96, 170, 255, 0.28);
+    --color-gray-900: #e6f1fb;
 }
 
-/* 學生版主題 (酷炫霓虹暗黑) */
+/* 學生版主題 (深藍夜空＋青藍發光) */
 body.theme-student {
-    --primary: #a855f7;
-    --primary-glow: rgba(168, 85, 247, 0.3);
-    --bg-gradient: linear-gradient(135deg, #090514 0%, #120a2a 100%);
-    --card-bg: rgba(20, 12, 40, 0.6);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --text-primary: #f3e8ff;
-    --text-secondary: #c084fc;
-    --orb-1-color: rgba(139, 92, 246, 0.25);
-    --orb-2-color: rgba(236, 72, 153, 0.15);
+    --primary: #34c8e0;
+    --primary-text: #04222b;
+    --primary-glow: rgba(52, 200, 224, 0.18);
+    --primary-shadow: 0 0 18px rgba(52, 200, 224, 0.45);
+    --bg-gradient: radial-gradient(ellipse at 50% 0%, #0e2138 0%, #07101f 55%, #04070f 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(96, 170, 255, 0.28);
+    --card-border-hover: rgba(120, 195, 255, 0.6);
+    --text-primary: #e6f1fb;
+    --text-secondary: #9db8d6;
+    --text-muted: #6f8bab;
+    --orb-1-color: rgba(52, 200, 224, 0.12);
+    --orb-2-color: rgba(14, 80, 160, 0.18);
     --color-gray-100: rgba(255, 255, 255, 0.05);
-    --color-gray-200: rgba(255, 255, 255, 0.1);
-    --color-gray-900: #faf5ff;
+    --color-gray-200: rgba(96, 170, 255, 0.28);
+    --color-gray-900: #e6f1fb;
 }
 
 /* 基礎重設與排版 */
@@ -75,6 +95,7 @@ body.theme-student {
 body {
     font-family: var(--font-primary);
     background: var(--bg-gradient);
+    background-attachment: fixed;
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
@@ -101,7 +122,7 @@ body {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
-    mix-blend-mode: multiply;
+    mix-blend-mode: screen;
     transition: var(--transition-smooth);
 }
 
@@ -152,6 +173,13 @@ body {
 
 .logo span {
     color: var(--primary);
+}
+
+.logo-img {
+    height: 36px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
 
 /* 玻璃卡片基底 */
@@ -223,8 +251,8 @@ body {
 }
 
 .role-btn {
-    background: var(--color-white);
-    border: 1.5px solid var(--color-gray-200);
+    background: var(--card-bg);
+    border: 1.5px solid var(--card-border);
     border-radius: var(--radius-md);
     padding: 30px 20px;
     cursor: pointer;
@@ -235,8 +263,8 @@ body {
 }
 
 body.theme-student .role-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .role-icon {
@@ -259,8 +287,8 @@ body.theme-student .role-btn {
 
 .role-btn:hover {
     transform: translateY(-5px);
-    border-color: var(--primary);
-    box-shadow: 0 12px 24px -10px var(--primary-glow);
+    border-color: var(--card-border-hover);
+    box-shadow: var(--primary-shadow);
 }
 
 /* 進度條樣式 */
@@ -275,19 +303,20 @@ body.theme-student .role-btn {
 .progress-bar-wrapper {
     flex: 1;
     height: 8px;
-    background: var(--color-gray-200);
+    background: rgba(96, 170, 255, 0.15);
     border-radius: 10px;
     overflow: hidden;
 }
 
 body.theme-student .progress-bar-wrapper {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(96, 170, 255, 0.15);
 }
 
 .progress-bar {
     height: 100%;
     background: var(--primary);
     border-radius: 10px;
+    box-shadow: var(--primary-shadow);
     transition: width 0.30s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -409,8 +438,8 @@ body.theme-student .progress-bar-wrapper {
     display: flex;
     align-items: center;
     padding: 16px 20px;
-    background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition-smooth);
@@ -419,8 +448,8 @@ body.theme-student .progress-bar-wrapper {
 }
 
 body.theme-student .option-item {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .option-item input {
@@ -438,7 +467,7 @@ body.theme-student .option-item {
 }
 
 .option-item:hover {
-    border-color: var(--primary);
+    border-color: var(--card-border-hover);
     background: var(--primary-glow);
     transform: translateX(4px);
 }
@@ -446,7 +475,7 @@ body.theme-student .option-item {
 .option-item.selected {
     border-color: var(--primary);
     background: var(--primary-glow);
-    box-shadow: 0 4px 12px -5px var(--primary-glow);
+    box-shadow: var(--primary-shadow);
 }
 
 /* 輸入框樣式 */
@@ -457,24 +486,24 @@ body.theme-student .option-item {
 .input-text {
     width: 100%;
     padding: 16px;
-    border: 1.5px solid var(--color-gray-200);
+    border: 1.5px solid var(--card-border);
     border-radius: var(--radius-md);
     font-size: 1rem;
-    background: var(--color-white);
+    background: var(--card-bg);
     color: var(--text-primary);
     font-family: var(--font-primary);
     transition: var(--transition-smooth);
 }
 
 body.theme-student .input-text {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .input-text:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-glow);
+    box-shadow: 0 0 0 3px var(--primary-glow), var(--primary-shadow);
 }
 
 .textarea-text {
@@ -498,31 +527,33 @@ body.theme-student .input-text {
 
 .btn-primary {
     background: var(--primary);
-    color: var(--color-white);
+    color: var(--primary-text);
 }
 
 .btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px -10px var(--primary);
+    box-shadow: var(--primary-shadow);
 }
 
 .btn-secondary {
-    background: var(--color-gray-100);
+    background: var(--card-bg);
     color: var(--text-primary);
-    border: 1px solid var(--color-gray-200);
+    border: 1px solid var(--card-border);
 }
 
 body.theme-student .btn-secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-    background: var(--color-gray-200);
+    border-color: var(--card-border-hover);
+    background: rgba(96, 170, 255, 0.1);
 }
 
 body.theme-student .btn-secondary:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--card-border-hover);
+    background: rgba(96, 170, 255, 0.1);
 }
 
 .btn:disabled {
@@ -576,9 +607,9 @@ body.theme-student .btn-secondary:hover:not(:disabled) {
 
 .falling-star {
     position: absolute;
-    color: #f59e0b;
+    color: #FFC400;
     font-size: 1.5rem;
-    filter: drop-shadow(0 0 5px #fbbf24);
+    filter: drop-shadow(0 0 5px #FFC400);
     animation: fall linear forwards;
 }
 
@@ -630,17 +661,17 @@ body.theme-student .btn-secondary:hover:not(:disabled) {
 }
 
 .stat-box {
-    background: var(--color-white);
-    border: 1px solid var(--color-gray-200);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
     padding: 20px;
     text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 body.theme-student .stat-box {
-    background: rgba(255, 255, 255, 0.03);
-    border-color: rgba(255, 255, 255, 0.08);
+    background: var(--card-bg);
+    border-color: var(--card-border);
 }
 
 .stat-val {
@@ -703,14 +734,14 @@ body.theme-student .stat-box {
 
 .bar-wrapper {
     height: 20px;
-    background: var(--color-gray-200);
+    background: rgba(96, 170, 255, 0.15);
     border-radius: 10px;
     overflow: hidden;
     position: relative;
 }
 
 body.theme-student .bar-wrapper {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(96, 170, 255, 0.15);
 }
 
 .bar-fill {
@@ -734,12 +765,12 @@ body.theme-student .bar-wrapper {
 .email-list-wrapper {
     max-height: 250px;
     overflow-y: auto;
-    border: 1px solid var(--color-gray-200);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-sm);
 }
 
 body.theme-student .email-list-wrapper {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--card-border);
 }
 
 .email-table {
@@ -754,22 +785,22 @@ body.theme-student .email-list-wrapper {
 }
 
 .email-table th {
-    background: var(--color-gray-100);
+    background: rgba(96, 170, 255, 0.12);
     font-weight: 600;
     position: sticky;
     top: 0;
 }
 
 body.theme-student .email-table th {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(96, 170, 255, 0.12);
 }
 
 .email-table tr:not(:last-child) {
-    border-bottom: 1px solid var(--color-gray-100);
+    border-bottom: 1px solid rgba(96, 170, 255, 0.15);
 }
 
 body.theme-student .email-table tr:not(:last-child) {
-    border-bottom-color: rgba(255, 255, 255, 0.05);
+    border-bottom-color: rgba(96, 170, 255, 0.15);
 }
 
 /* 工具類 */
@@ -810,4 +841,33 @@ body.theme-student .email-table tr:not(:last-child) {
     body {
         align-items: flex-start;
     }
+}
+
+/* ── 開場幻燈片遮罩 ── */
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #07101f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.4s ease;
+}
+
+#intro-overlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-slide {
+    position: absolute;
+    max-width: min(88vw, 680px);
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0;
+    /* transition 由 JS 控制，這裡不設 */
 }

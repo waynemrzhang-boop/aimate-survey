@@ -24,7 +24,7 @@
     <main class="app-wrapper">
         <!-- 頂部 Logo / 標題 -->
         <header class="app-header">
-            <div class="logo">AImate<span>.ai</span></div>
+            <img src="slides/slide1.png" alt="AImate.ai" class="logo-img">
             <button id="admin-trigger" class="btn-icon-only" title="管理後台">📊</button>
         </header>
 
@@ -173,5 +173,92 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- 開場幻燈片動畫（第一次載入才播） -->
+    <script>
+        (function () {
+            if (sessionStorage.getItem('introPlayed')) return;
+            sessionStorage.setItem('introPlayed', '1');
+
+            var SLIDES = [
+                'slides/slide1.png',
+                'slides/slide2.png',
+                'slides/slide3.png',
+                'slides/slide4.png',
+                'slides/slide5.png'
+            ];
+
+            // 整段總時長：2200ms；最後一張多停 400ms 再淡出 overlay
+            var TOTAL_MS   = 2200;
+            var FADE_MS    = 180;   // 每張 crossfade 時間
+            var PER_SLIDE  = Math.floor(TOTAL_MS / SLIDES.length); // ~440ms
+            var HOLD_LAST  = 400;   // 最後一張多停
+            var OVERLAY_FADE = 400;
+
+            // 建 overlay
+            var overlay = document.createElement('div');
+            overlay.id = 'intro-overlay';
+
+            // 建兩張 img 做 crossfade（A/B 切換）
+            var imgs = [document.createElement('img'), document.createElement('img')];
+            imgs.forEach(function (img) {
+                img.className = 'intro-slide';
+                overlay.appendChild(img);
+            });
+
+            document.body.appendChild(overlay);
+
+            var current = 0;   // 目前顯示的 img index (0 或 1)
+            var dismissed = false;
+
+            function dismiss() {
+                if (dismissed) return;
+                dismissed = true;
+                overlay.classList.add('fade-out');
+                setTimeout(function () { overlay.remove(); }, OVERLAY_FADE + 50);
+            }
+
+            overlay.addEventListener('click', dismiss, { once: true });
+
+            // 顯示第 slideIdx 張圖，放在 slot（0 或 1）
+            function showSlide(slideIdx, slot) {
+                var img = imgs[slot];
+                var other = imgs[slot ^ 1];
+                img.src = SLIDES[slideIdx];
+                img.style.opacity = '0';
+                img.style.transition = 'opacity ' + FADE_MS + 'ms ease';
+
+                // 確保圖片載入後再淡入
+                img.onload = function () {
+                    img.style.opacity = '1';
+                    // 上一張淡出
+                    if (slideIdx > 0) {
+                        other.style.transition = 'opacity ' + FADE_MS + 'ms ease';
+                        other.style.opacity = '0';
+                    }
+                };
+                // 若已快取就手動觸發
+                if (img.complete) img.onload();
+            }
+
+            // 先顯示第 0 張
+            imgs[0].style.opacity = '0';
+            imgs[1].style.opacity = '0';
+            showSlide(0, 0);
+
+            // 逐張切換
+            var idx = 1;
+            var timer = setInterval(function () {
+                if (idx >= SLIDES.length) {
+                    clearInterval(timer);
+                    // 最後一張多停一下再 dismiss
+                    setTimeout(dismiss, HOLD_LAST);
+                    return;
+                }
+                showSlide(idx, idx % 2);
+                idx++;
+            }, PER_SLIDE);
+        })();
+    </script>
 </body>
 </html>

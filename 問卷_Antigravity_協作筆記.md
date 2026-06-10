@@ -234,3 +234,24 @@
 想用的話，我會用自己的零用錢付／我會請爸媽幫我付／要付費我大概就不用了／不確定
 
 **q7｜選填（簡答）** 你最希望數學學習的 App 能幫你什麼？
+
+
+---
+
+## 2026-06-10 改版：套用 AImate 軟體「深藍發光」主題 ＋ 開場動畫 ＋ logo 去背
+
+**做了什麼**
+1. 配色：整份問卷（首頁＋家長版＋學生版）從紫色改成深藍發光。只動 css/style.css，集中在 :root CSS 變數。
+   - 色票：底 radial #0e2138 / #07101f / #04070f；accent 青藍 #34c8e0（光暈 0 0 18px rgba(52,200,224,.45)）；字 #e6f1fb / #9db8d6 / #6f8bab；邊框 rgba(96,170,255,.28)；星黃 #FFC400。
+2. 左上角 logo：文字「Almate.ai」換成 AImate 標誌圖 slides/slide1.png（去背透明版）。
+3. 圖片去背：原 logo frame 有深藍方塊底，放深藍頁面會出現方框。解法＝用「亮度轉透明度」做成保留發光的透明 PNG（Claude 處理），覆蓋進 slides/，改英文檔名 slide1~slide5（slide1 最暗→slide5 最亮）。透明後把 logo 的 mix-blend-mode 拿掉。
+4. 資料夾：原中文「AImate幻燈片」改成英文 slides（中文資料夾名在 Firebase 部署易破圖）。
+
+**雷與心得**
+- glow logo 直接貼會有方框；mix-blend-mode: screen 只在純黑底才隱形，navy 底仍露方框 → 正解是做成真透明。
+- glow-on-dark 去背：用亮度當 alpha 最自然（暗→透明、字與光暈留著），且只在深色背景上好看。
+- Firebase＝Hosting（公開網址 aimate-survey.web.app）＋ Firestore（收答案）。目前都在 localhost 改、尚未部署；之後部署務必確認 slides/ 一起上傳，否則線上版破圖。
+
+**下一步**
+- 開場幻燈片：5 張透明 slide 已就緒，Antigravity 指令已備（全螢幕遮罩 #07101f、依檔名由暗到亮、第一次載入播一次、點畫面可跳過、約 2~2.5 秒）→ 套用。
+- 要收真實回覆時再接 Firebase 部署（記得帶上 slides/）。
