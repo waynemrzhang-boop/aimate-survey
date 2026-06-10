@@ -246,6 +246,7 @@
 2. 左上角 logo：文字「Almate.ai」換成 AImate 標誌圖 slides/slide1.png（去背透明版）。
 3. 圖片去背：原 logo frame 有深藍方塊底，放深藍頁面會出現方框。解法＝用「亮度轉透明度」做成保留發光的透明 PNG（Claude 處理），覆蓋進 slides/，改英文檔名 slide1~slide5（slide1 最暗→slide5 最亮）。透明後把 logo 的 mix-blend-mode 拿掉。
 4. 資料夾：原中文「AImate幻燈片」改成英文 slides（中文資料夾名在 Firebase 部署易破圖）。
+5. 開場幻燈片（完成）：用 slides/slide1~5 做全螢幕開場幻燈片，第一次載入播一次、點畫面可跳過、約 2~2.5 秒、底 #07101f、依檔名由暗到亮。
 
 **雷與心得**
 - glow logo 直接貼會有方框；mix-blend-mode: screen 只在純黑底才隱形，navy 底仍露方框 → 正解是做成真透明。
@@ -253,5 +254,4 @@
 - Firebase＝Hosting（公開網址 aimate-survey.web.app）＋ Firestore（收答案）。目前都在 localhost 改、尚未部署；之後部署務必確認 slides/ 一起上傳，否則線上版破圖。
 
 **下一步**
-- 開場幻燈片：5 張透明 slide 已就緒，Antigravity 指令已備（全螢幕遮罩 #07101f、依檔名由暗到亮、第一次載入播一次、點畫面可跳過、約 2~2.5 秒）→ 套用。
 - 要收真實回覆時再接 Firebase 部署（記得帶上 slides/）。
