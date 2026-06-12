@@ -255,3 +255,14 @@
 
 **下一步**
 - 要收真實回覆時再接 Firebase 部署（記得帶上 slides/）。
+
+## 2026-06-10 改版（下午）：intro 呼吸燈 ＋ 家長分流放寬 ＋ 複選 bug 修正
+
+> 接續同日「深藍發光主題」那次，稍晚再做三處。全部用 python 讀檔→replace→寫回（沒走 Antigravity），改完瀏覽器 Cmd+Shift+R 驗證。
+
+**做了什麼**
+1. intro 呼吸燈（css/style.css）：所有 `.card-intro-text`（開頭語＋各題 intro 灰底說明框共用同一類別）加 `@keyframes introBreathe`，青藍光暈約 3.6s 緩緩呼吸；附 prefers-reduced-motion 時關閉。append 在檔尾、有標記防重複加。
+2. 家長分流放寬＋文案（survey-data.js ＋ index.html）：q1 家長版 filter 從「國小／高中以上／我沒有國中階段的孩子」收成只剩「我沒有國中階段的孩子」→ 國小、高中以上現在會照常答完中間每一題、答案納入統計。角色按鈕「我是國中生家長」→「我是學生家長」、家長開頭語「國中生家長」→「學生家長」（首頁副標的「國中數學」刻意沒動；學生版沒動）。
+3. 複選「打勾了卻被擋」bug（app.js）：複選選項的 checkbox 原本 onclick 只有 stopPropagation——點正中小方格時畫面打勾但 state.answers 沒更新，驗證就誤判沒填；點整列正常、只有點方格漏記，所以時好時壞、來回切又好（重畫只是把畫面對回 state、不是真修好）。修法：checkbox onclick 改成 stopPropagation 後再呼叫 toggleMultipleOption(this.closest('.option-item'), …)，跟「其他」格既有委派寫法一致，點列／點方格兩條路徑各觸發一次 toggle，畫面與 state 永遠同步。
+
+**下一步**：同上次——要收真實回覆再接 Firebase 部署（記得帶 slides/）。

@@ -157,7 +157,7 @@ function renderQuestion() {
             const isSelected = currentAns.includes(opt);
             html += `
                 <div class="option-item ${isSelected ? 'selected' : ''}" onclick="toggleMultipleOption(this, '${q.id}', '${opt}')">
-                    <input type="checkbox" name="${q.id}" value="${opt}" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation()">
+                    <input type="checkbox" name="${q.id}" value="${opt}" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation(); toggleMultipleOption(this.closest('.option-item'), '${q.id}', '${opt}')">
                     <span class="option-text">${opt}</span>
                 </div>
             `;
