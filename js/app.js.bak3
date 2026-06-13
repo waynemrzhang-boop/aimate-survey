@@ -401,7 +401,7 @@ function submitSurvey() {
     
     viewport.innerHTML = `
         <div class="completion-card glass-card">
-            <div class="completion-logo"><img src="slides/slide1.png" alt="AImate" class="completion-logo-img"></div>
+            <div class="completion-icon">${isStudent ? '✨🎓🎒' : '💙📝👏'}</div>
             <h2>問卷已提交！感謝您的協助</h2>
             <p class="subtitle" style="margin-bottom:8px;">您的寶貴回饋將成為我們設計 AImate App 數學輔導功能的重要憑據。</p>
             <p class="subtitle" style="margin-bottom:20px;">${isStudent ? '若你有留 email，我們會把試用通知寄到你的信箱 📬。也歡迎掃描下方 QR、加入我們的 Line 社群 👇' : '若您留了 email，我們會把試用通知寄到您的信箱 📬。也歡迎掃描下方 QR、加入我們的 Line 社群 👇'}</p>

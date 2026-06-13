@@ -2,6 +2,7 @@
 
 > 記錄「怎麼用 Claude ＋ Antigravity 一起做／改線上問卷」，方便之後再做問卷時直接照做。
 > 整理日期：2026-06-07（2026-06-09 更新：專案已搬到 `~/Projects/aimate-survey`，本檔也放進該資料夾內）
+> 最後更新：2026-06-13
 > 注意：這是**獨立的線上問卷 App**，放在 `~/Projects/aimate-survey`，跟主力的 AImate Electron App 是兩回事，改它不用動 STATUS／CHANGELOG／ROADMAP 那套文件。
 
 ---
@@ -266,3 +267,29 @@
 3. 複選「打勾了卻被擋」bug（app.js）：複選選項的 checkbox 原本 onclick 只有 stopPropagation——點正中小方格時畫面打勾但 state.answers 沒更新，驗證就誤判沒填；點整列正常、只有點方格漏記，所以時好時壞、來回切又好（重畫只是把畫面對回 state、不是真修好）。修法：checkbox onclick 改成 stopPropagation 後再呼叫 toggleMultipleOption(this.closest('.option-item'), …)，跟「其他」格既有委派寫法一致，點列／點方格兩條路徑各觸發一次 toggle，畫面與 state 永遠同步。
 
 **下一步**：同上次——要收真實回覆再接 Firebase 部署（記得帶 slides/）。
+
+
+## 2026-06-13 改版：email 框修復 ＋ 學生版收 email ＋ 感謝頁 Line QR ＋ 取消單選自動跳 ＋ logo 發光
+
+> 全部走 python 讀檔→replace→寫回（沒走 Antigravity）；每段「比對到 1 處才動手」並備份 .bak。改完 Cmd+Shift+R 驗證。新增素材：slides/line-qr.png（從《問卷.pptx》抽出的真實 Line 社群碼）。
+
+**做了什麼**
+1. 修 email 輸入框 bug（app.js）：email_signup 的 `<input id="email-field">` 原本包在 `.option-item`（user-select:none 的可點選列）裡，Mac 上點不動、打不了字 → 搬到選項列外面變獨立欄位（selectEmailOpt 仍用 id 找得到、照常顯示+focus）。
+2. 學生版加 email 題（survey-data.js）：student 陣列「最後簡答 q7」前插入 id='q_email'、type email_signup、學生口吻（提到可用學校信箱）。⚠️ 用不衝突的新 id；後台圖表預設不畫此題（答案有收、可匯出）。
+3. 感謝頁 Line QR ＋ 文案（app.js submitSurvey 的 completion card）：加「會把試用通知寄到信箱 ＋ 歡迎掃碼加 Line 社群」（依 isStudent 切「你/您」）、QR 圖 slides/line-qr.png、「不定期 PO AI 教學資訊」說明。家長/學生共用同一 QR。
+4. QR 黃綠呼吸燈（css/style.css）：.line-qr-wrap ＋ @keyframes qrBreathe（黃綠 rgba(174,224,0)、3.6s 呼吸；prefers-reduced-motion 關閉）；白底+留白好掃描。
+5. 取消單選自動跳題（app.js selectSingleOption）：移除點選後 300ms 自動 nextQuestion 的 setTimeout → 點了只選起來、自己按下一題。星星特效（學生 q5 triggerEffect）與分流 filter 都保留。
+6. 感謝頁三個 emoji → AImate logo 發光（app.js + css）：completion-icon 換成 slides/slide1.png；.completion-logo-img ＋ @keyframes logoGlow（青藍 #34c8e0 drop-shadow + 微放大呼吸；prefers-reduced-motion 關閉）。想更亮可換 slide5.png。
+
+**設計決定**
+- email 必須當「題目」收（才會進 saveResponse 的答案），放問卷中段；Line QR 是送出後的 CTA、不存資料，放感謝頁。這就是為什麼兩者在不同畫面。
+
+**雷與心得**
+- 輸入框「看得到卻打不了字」多半是被包在 user-select:none 的可點選容器裡（Mac/Safari 易發）→ 把 input 搬出容器最乾淨。
+- 新增題務必用不衝突的 id，且避開驗證特例（isOptional 用 q.id==='q8' / 學生 q7 判斷）。
+
+**下一步（未做）**
+- ① 首頁身份選擇 → 科技感「點選圖卡」（簡報那兩張只當風格參考，不直接用）→ 走 Antigravity。
+- ② App 實際畫面（考卷上傳頁、單元列表頁＝《問卷.pptx》第2頁兩張）柔邊融入「整理考卷」段落 → 走 Antigravity。
+- 後台圖表：q_email / q_free / q_free_benefit 等新增題不自動生圖，要圖再加。
+- Firebase 部署仍未做；要收真實回覆再接，且 slides/ 現在多了 line-qr.png，部署務必一起上傳（否則感謝頁 QR 破圖）。

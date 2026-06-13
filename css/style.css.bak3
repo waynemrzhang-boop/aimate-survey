@@ -888,13 +888,3 @@ body.theme-student .email-table tr:not(:last-child) {
 .line-qr-caption { font-size:0.9rem; color:var(--text-2,#9db8d6); margin:0 0 22px; }
 @keyframes qrBreathe { 0%,100%{box-shadow:0 0 16px 2px rgba(174,224,0,.35);} 50%{box-shadow:0 0 30px 9px rgba(174,224,0,.70);} }
 @media (prefers-reduced-motion: reduce){ .line-qr-wrap{ animation:none; } }
-
-
-/* === 感謝頁 AImate logo 發光 === */
-.completion-logo { display:flex; justify-content:center; margin-bottom:18px; }
-.completion-logo-img { width:96px; height:auto; animation:logoGlow 3.6s ease-in-out infinite; }
-@keyframes logoGlow {
-    0%,100% { filter:drop-shadow(0 0 8px rgba(52,200,224,.40)) drop-shadow(0 0 16px rgba(52,200,224,.25)); transform:scale(1); }
-    50%     { filter:drop-shadow(0 0 16px rgba(52,200,224,.70)) drop-shadow(0 0 34px rgba(52,200,224,.45)); transform:scale(1.04); }
-}
-@media (prefers-reduced-motion: reduce){ .completion-logo-img { animation:none; filter:drop-shadow(0 0 12px rgba(52,200,224,.5)); } }

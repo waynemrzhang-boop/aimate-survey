@@ -214,14 +214,6 @@ window.SURVEY_QUESTIONS = {
             ]
         },
         {
-            id: 'q_email',
-            title: '如果我們推出試用版，你願意留下 email 搶先「免費」試用嗎？',
-            type: 'email_signup',
-            badge: '單選＋簡答｜承諾訊號',
-            intro: '先跟你說：「各科考卷拍照整理」完全免費；另外還有「AI 老師像聊天一樣、一題一題帶你把不會的數學想通」的進階功能。想搶先免費玩玩看的話，可以留下 email（用學校信箱也可以）。',
-            options: ['願意，我的 email 是：', '不用了']
-        },
-        {
             id: 'q7',
             title: '你最希望數學學習的 App 能幫你什麼？',
             type: 'textarea',

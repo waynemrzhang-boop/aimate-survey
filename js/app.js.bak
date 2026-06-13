@@ -231,6 +231,15 @@ function selectSingleOption(qid, value) {
     if (q.triggerEffect && q.triggerEffect(value)) {
         triggerStarsCelebration();
     }
+    
+    // 自動前往下一題 (給單選做快捷體驗)
+    setTimeout(() => {
+        // 如果還不是最後一題，且非分流題
+        const filterTriggered = q.filter && q.filter(value);
+        if (state.currentStep < state.questions.length - 1 && !filterTriggered) {
+            nextQuestion();
+        }
+    }, 300);
 }
 
 // 切換多選複選
@@ -401,12 +410,9 @@ function submitSurvey() {
     
     viewport.innerHTML = `
         <div class="completion-card glass-card">
-            <div class="completion-logo"><img src="slides/slide1.png" alt="AImate" class="completion-logo-img"></div>
+            <div class="completion-icon">${isStudent ? '✨🎓🎒' : '💙📝👏'}</div>
             <h2>問卷已提交！感謝您的協助</h2>
-            <p class="subtitle" style="margin-bottom:8px;">您的寶貴回饋將成為我們設計 AImate App 數學輔導功能的重要憑據。</p>
-            <p class="subtitle" style="margin-bottom:20px;">${isStudent ? '若你有留 email，我們會把試用通知寄到你的信箱 📬。也歡迎掃描下方 QR、加入我們的 Line 社群 👇' : '若您留了 email，我們會把試用通知寄到您的信箱 📬。也歡迎掃描下方 QR、加入我們的 Line 社群 👇'}</p>
-            <div class="line-qr-wrap"><img src="slides/line-qr.png" alt="Line 社群 QR code" class="line-qr"></div>
-            <p class="line-qr-caption">加入後，我們會不定期 PO 各種 AI 教學資訊 🤖</p>
+            <p class="subtitle" style="margin-bottom:24px;">您的寶貴回饋將成為我們設計 AImate App 數學輔導功能的重要憑據。</p>
             <div class="btn-group" style="justify-content:center;">
                 <button class="btn btn-primary" onclick="restartSurvey()">填寫另一份</button>
                 <button class="btn btn-secondary" onclick="enterDashboard()">查看數據後台</button>
